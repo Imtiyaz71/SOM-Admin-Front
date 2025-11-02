@@ -1,8 +1,27 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
-
-import { routes } from './app.routes';
-
-export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes)]
-};
+import { Routes } from '@angular/router';
+import { LoginComponent } from './login/login.component';
+import { MainComponent } from './main/main.component';
+import { DashboardComponent } from './main/dashboard/dashboard.component';
+import { ClientComponent } from './main/client/client.component';
+import { AuthGuard } from './services/auth.guard';
+import { ModuleentryComponent } from './main/moduleentry/moduleentry.component';
+import { MenuentryComponent } from './main/menuentry/menuentry.component';
+import { ClientstatusComponent } from './main/clientstatus/clientstatus.component';
+export const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  {
+    path: 'main',
+    component: MainComponent,
+    canActivate: [AuthGuard],
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'client', component: ClientComponent },
+       { path: 'module', component: ModuleentryComponent },
+          { path: 'menu', component: MenuentryComponent },
+              { path: 'clientstatus', component: ClientstatusComponent },
+    ]
+  },
+  { path: '**', redirectTo: 'login' }
+];

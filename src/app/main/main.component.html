@@ -1,0 +1,35 @@
+<div class="main-wrapper">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2 class="sidebar-title">Admin Panel</h2>
+
+    <a routerLink="/main/dashboard" routerLinkActive="active-link" class="menu-item">
+      Dashboard
+    </a>
+
+    <!-- Clients dropdown -->
+    <div class="menu-dropdown">
+      <div class="menu-item dropdown-toggle" (click)="toggleClientMenu()">
+        Clients
+        <span class="arrow" [class.open]="clientMenuOpen">&#9662;</span>
+      </div>
+
+      <div class="submenu" [class.open]="clientMenuOpen">
+        <a routerLink="/main/client" routerLinkActive="active-link" class="submenu-item">Client Info</a>
+           <a routerLink="/main/clientstatus" routerLinkActive="active-link" class="submenu-item">Client Status</a>
+        <a routerLink="/main/module" routerLinkActive="active-link" class="submenu-item">Module Entry</a>
+       <a routerLink="/main/menu" routerLinkActive="active-link" class="submenu-item">Menu Entry</a>
+
+      </div>
+    </div>
+
+    <a (click)="logout()" class="menu-item logout">Logout</a>
+  </aside>
+
+  <!-- Main content -->
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>

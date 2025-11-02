@@ -1,0 +1,37 @@
+<div class="container mt-3">
+
+  <h4 class="mb-3">Menu Permission Setup</h4>
+
+  <!-- Company -->
+  <label><b>Select Company</b></label>
+  <select class="form-control mb-2" [(ngModel)]="selectedCompanyId" (change)="onCompanyChange()">
+    <option value="">-- Select Company --</option>
+    <option *ngFor="let c of companies" [value]="c.id">{{c.cName}}</option>
+  </select>
+
+  <!-- Authorizer -->
+  <label><b>Select Authorizer</b></label>
+  <select class="form-control mb-2" [(ngModel)]="selectauthorizer">
+    <option value="">-- Select Authorizer --</option>
+    <option *ngFor="let a of authorizers" [value]="a.id">{{a.designation}}</option>
+  </select>
+
+  <!-- Modules -->
+  <label><b>Select Module</b></label>
+  <select class="form-control mb-2" [(ngModel)]="selectedModuleId" (change)="loadChildMenusForSelectedModule()">
+    <option value="">-- Select Module --</option>
+    <option *ngFor="let m of moduleTree" [value]="m.id">{{m.menuName}}</option>
+  </select>
+
+  <!-- Child Menus Multi-Select -->
+  <div *ngIf="childMenus.length > 0">
+    <label><b>Select Child Menus</b></label>
+    <select multiple class="form-control" [(ngModel)]="selectedChildIds">
+      <option *ngFor="let child of childMenus" [value]="child.id">{{child.menuName}}</option>
+    </select>
+    <small class="text-muted">Multiple select: Press CTRL</small>
+  </div>
+
+  <button class="btn btn-success w-100 mt-3" (click)="saveEligibility()">Save</button>
+
+</div>

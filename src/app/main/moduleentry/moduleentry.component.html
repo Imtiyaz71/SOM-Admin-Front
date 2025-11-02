@@ -1,0 +1,89 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+<div class="container mt-4">
+
+  <!-- Form Card -->
+  <div class="card border-0 shadow-lg rounded-3">
+    <div class="card-header bg-primary text-white py-3 rounded-top">
+      <h5 class="mb-0"><i class="bi bi-grid-fill"></i> Module Entry</h5>
+    </div>
+    <div class="card-body p-4">
+      <form class="row g-4">
+        <!-- Company -->
+        <div class="col-md-6">
+          <label class="form-label fw-semibold"><i class="bi bi-building"></i> Company</label>
+          <select class="form-select form-select-lg" [(ngModel)]="selectedCompany" name="company" required>
+            <option value="">--- Select Company ---</option>
+            <option *ngFor="let c of companies" [value]="c.id">{{ c.cName }}</option>
+          </select>
+        </div>
+
+        <!-- Module -->
+        <div class="col-md-6">
+          <label class="form-label fw-semibold"><i class="bi bi-boxes"></i> Module</label>
+          <select class="form-select form-select-lg" [(ngModel)]="selectedModule" name="module" required>
+            <option value="">--- Select Module ---</option>
+            <option *ngFor="let m of modules" [value]="m.id">{{ m.menuName }}</option>
+          </select>
+        </div>
+
+        <!-- Buttons -->
+        <div class="col-12 text-end mt-3">
+          <button type="button" class="btn btn-success btn-lg px-4 me-2" (click)="saveData()">
+            <i class="bi bi-save-fill"></i> Save
+          </button>
+          <button type="reset" class="btn btn-outline-secondary btn-lg px-4">
+            <i class="bi bi-arrow-counterclockwise"></i> Reset
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Table Card -->
+  <div class="card border-0 shadow-lg rounded-3 mt-4">
+    <div class="card-header bg-secondary text-white py-3 rounded-top">
+      <h5 class="mb-0"><i class="bi bi-table"></i> Company Modules</h5>
+    </div>
+    <div class="card-body p-4">
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th>Company</th>
+              <th>Module</th>
+              <th>Sort Order</th>
+               <th>Action</th>
+            </tr>
+          </thead>
+         <tbody>
+  <ng-container *ngFor="let company of (groupedCompanyModules | keyvalue)">
+
+    <!-- Company Row -->
+    <tr class="table-primary fw-bold">
+      <td colspan="3">{{ company.key }}</td>
+    </tr>
+
+    <!-- Modules Rows -->
+    <tr *ngFor="let item of company.value">
+      <td></td>
+      <td>{{ item.menuName }}</td>
+      <td>{{ item.sortOrder }}</td>
+       <td>
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="deleteModule(item.ids)">
+            <i class="bi bi-trash-fill"></i> Delete
+          </button>
+        </td>
+    </tr>
+
+  </ng-container>
+</tbody>
+
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>

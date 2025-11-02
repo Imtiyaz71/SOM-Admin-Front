@@ -1,0 +1,60 @@
+<div class="container p-4">
+
+  <!-- Message -->
+  <div *ngIf="message" class="alert alert-info">
+    {{ message }}
+  </div>
+
+  <!-- Table -->
+  <table class="table table-bordered table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th>Id</th>
+        <th>Company Name</th>
+        <th>PDate</th>
+        <th>EDate</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of clientStatusList">
+        <td>{{ item.id }}</td>
+        <td>{{ item.cName }}</td>
+        <td>{{ item.pDate | date:'yyyy-MM-dd' }}</td>
+        <td>{{ item.eDate | date:'yyyy-MM-dd' }}</td>
+        <td>
+          <span
+            class="badge"
+            [ngClass]="{'bg-success': item.cStatus === 1, 'bg-danger': item.cStatus === 0}">
+            {{ item.cStatus === 1 ? 'Active' : 'Deactive' }}
+          </span>
+        </td>
+        <td>
+          <button class="btn btn-primary btn-sm" (click)="editStatus(item)">
+            Edit
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Edit Form -->
+  <div *ngIf="selectedStatus" class="card p-3 mt-3 border-primary">
+    <h5>Edit Client Status (Id: {{ selectedStatus.id }})</h5>
+    <form (ngSubmit)="updateStatus()">
+      <div class="mb-2">
+        <label>PDate</label>
+        <input type="date" [(ngModel)]="selectedStatus.pDate" name="pDate" class="form-control" required>
+      </div>
+      <div class="mb-2">
+        <label>EDate</label>
+        <input type="date" [(ngModel)]="selectedStatus.eDate" name="eDate" class="form-control" required>
+      </div>
+   
+      <button type="submit" class="btn btn-success me-2">Update</button>
+      <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+    </form>
+  </div>
+
+</div>
